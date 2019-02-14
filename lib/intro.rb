@@ -36,6 +36,7 @@ class UserStories
       Screen.clear
       self.voter_or_candidate?
   end
+
   def self.voter_or_candidate?
     ################################################################################
     ############################ VOTER OR A CANDIDATE? #############################
@@ -78,7 +79,6 @@ class UserStories
     ############################         (END)         #############################
     ################################################################################
   end
-
 
   def self.voter_registration
     ################################################################################
@@ -130,7 +130,7 @@ class UserStories
     #Race of User
     my_race = gets.chomp
     #New Voter Instance is Created.
-    @voter1 = Voter.create(name:my_name,state:my_state,party:my_party,age:my_age,race:my_race)
+    $voter1 = Voter.create(name:my_name,state:my_state,party:my_party,age:my_age,race:my_race)
     Screen.clear
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
@@ -187,12 +187,12 @@ class UserStories
     puts"                                                                  "
     puts"                             Your Profile                         "
     puts"                                                                  "
-    puts"                            #{@voter1.name}                            "
+    puts"                            #{$voter1.name}                            "
     puts"                                                                  "
-    puts"                        State: #{@voter1.state}                        "
-    puts"                        Party: #{@voter1.party}                        "
-    puts"                          Age: #{@voter1.age}                        "
-    puts"                         Race: #{@voter1.race}                        "
+    puts"                        State: #{$voter1.state}                        "
+    puts"                        Party: #{$voter1.party}                        "
+    puts"                          Age: #{$voter1.age}                        "
+    puts"                         Race: #{$voter1.race}                        "
     puts"                                                                  "
     puts" __________________________________________________________________"
     gets.chomp
@@ -208,7 +208,7 @@ class UserStories
     puts"|                    (Ex. NYC, 101, Alien,...)                     |"
     puts"|__________________________________________________________________|"
     value = gets.chomp
-    @voter1.update_value(attr,value)
+    $voter1.update_value(attr,value)
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
     puts"|     Awesome,We Have Just Updated Your Informaton And Your        |"
@@ -216,12 +216,12 @@ class UserStories
     puts"|__________________________________________________________________|"
     puts" __________________________________________________________________ "
     puts"                                                                  "
-    puts"                            #{@voter1.name}                            "
+    puts"                            #{$voter1.name}                            "
     puts"                                                                  "
-    puts"                        State: #{@voter1.state}                        "
-    puts"                        Party: #{@voter1.party}                        "
-    puts"                          Age: #{@voter1.age}                        "
-    puts"                         Race: #{@voter1.race}                        "
+    puts"                        State: #{$voter1.state}                        "
+    puts"                        Party: #{$voter1.party}                        "
+    puts"                          Age: #{$voter1.age}                        "
+    puts"                         Race: #{$voter1.race}                        "
     puts"                                                                  "
     puts"__________________________________________________________________"
     ################################################################################
@@ -234,16 +234,19 @@ class UserStories
   def self.find_profile
     puts" __________________________________________________________________ "
     puts'|                                                                  |'
-    puts"|              Please Enter the Name You User to Registered        |"
+    puts"|              Please Enter the Name You Used to Registered        |"
     puts"|                         The First Time.                          |"
     puts"|__________________________________________________________________|"
     name = gets.chomp
-    @voter1 = Voter.registered_yet(name)
-    binding.pry
+    $voter1 = Voter.registered_yet(name)
+    # binding.pry
     puts" __________________________________________________________________ "
     puts'|                                                                  |'
-    puts"|                    Welcome Back #{@voter1.name}                  |"
+    puts"|                    Welcome Back #{$voter1.name}                  |"
     puts"|__________________________________________________________________|"
+    gets.chomp
+    Screen.clear
+    self.voting_instruction
   end
 
   def self.voting_instruction
@@ -256,6 +259,7 @@ class UserStories
     puts"|      Now That Your Done With That, Lets Dive Right Into It.      |"
     puts"|__________________________________________________________________|"
     gets.chomp
+    Screen.clear
     puts" __________________________________________________________________ "
     puts"                                                                  "
     puts"                      VOTING  INSTRUCTIONS                         "
@@ -275,10 +279,31 @@ class UserStories
     puts"       During each round you will also have the option to just     "
     puts"       veiw candidates that are in you party.                                                                 "
     puts"__________________________________________________________________"
+    gets.chomp
+    Screen.clear
+    puts"`__________________________________________________________________"
+    puts"|                                                                  |"
+    puts"|                    (Let The Games Begin)                         |"
+    puts"|__________________________________________________________________|"
+    gets.chomp
+    Screen.clear
+    self.round1
     ################################################################################
     ###############################  Instructions  #################################
     ###############################     (END)      #################################
     ################################################################################
+  end
+  def self.round1
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                         Round #1                                 |"
+          puts"|                     Mayoral Elections                            |"
+          puts"|__________________________________________________________________|"
+          gets.chomp
+          Candidate.my_party_cand
+          round1_vote = gets.chomp
+          round1_vote = Candidate.find_by(round1_vote)
+          Ballot.create(voter_id: $voter1.id,candidate_id:round1_vote)
   end
 
 end

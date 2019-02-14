@@ -1,10 +1,11 @@
 class Voter < ActiveRecord::Base
+  has_many :ballots
+  has_many :candidates, through: :ballots
 
+  #Checks database to see if user was created 
   def self.registered_yet(voter_name)
     Voter.find_by(name:voter_name)
   end
-
-
 
   # See all Party align Candidates
   def party_aligned_cand
@@ -24,9 +25,12 @@ class Voter < ActiveRecord::Base
       end
     end
   end
+
+  # Updates the value in db
   def update_value(aim,value)
     self.update("#{aim}": value)
   end
+
 
 
 end
