@@ -31,6 +31,7 @@ class UserStories
       ################################ INTRODUCTIONS #################################
       ################################     (END)     #################################
       ################################################################################
+      Screen.clear
       self.voter_or_candidate?
   end
   def self.voter_or_candidate?
@@ -114,7 +115,8 @@ class UserStories
 
     #Race of User
     my_race = gets.chomp
-    voter1 = Voter.create(name:my_name,state:my_state,age:my_age,race:my_race)
+    #New Voter Instance is Created
+    @voter1 = Voter.create(name:my_name,state:my_state,party:my_party,age:my_age,race:my_race)
 
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
@@ -133,19 +135,18 @@ class UserStories
     puts"                         Race: #{my_race}                         "
     puts"                                                                  "
     puts"                                                                  "
-    puts"                           (YES or NO)                               "
+    puts"                           (Yes or No)                               "
     puts"__________________________________________________________________"
     needs_update = gets.chomp
      if needs_update.start_with?("Y","y")
-       update_prompt
-
+       self.update_prompt
      end
     ################################################################################
     ###############################  Registration  #################################
     ###############################      (END)     #################################
     ################################################################################
   end
-  def update_prompt
+  def self.update_prompt
     ################################################################################
     ###############################     Update     #################################
     ################################################################################
@@ -154,52 +155,51 @@ class UserStories
     puts"|                    Updating Your Informaton                      |"
     puts"|__________________________________________________________________|"
     gets.chomp
+    # binding.pry
     puts" __________________________________________________________________ "
     puts"                                                                  "
-    puts"                            #{self.name}                            "
+    puts"                            #{@voter1.name}                            "
     puts"                                                                  "
-    puts"                        State: #{self.state}                        "
-    puts"                        Party: #{self.party}                        "
-    puts"                          Age: #{self.age}                        "
-    puts"                         Race: #{self.race}                        "
+    puts"                        State: #{@voter1.state}                        "
+    puts"                        Party: #{@voter1.party}                        "
+    puts"                          Age: #{@voter1.age}                        "
+    puts"                         Race: #{@voter1.race}                        "
     puts"                                                                  "
-    puts"__________________________________________________________________"
+    puts" __________________________________________________________________"
+    gets.chomp
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
     puts"|             What Informaton Would You Like To Update?            |"
     puts"|                    (Ex. State, Age, Race,...)                    |"
     puts"|__________________________________________________________________|"
-    attr = gets.chomp.upcase
+    attr = gets.chomp.downcase
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
     puts"|             What Would You Like The New Value To Be?             |"
     puts"|                    (Ex. NYC, 101, Alien,...)                     |"
     puts"|__________________________________________________________________|"
-    attr = gets.chomp
-      self.update_value(attr,value)
-      puts" __________________________________________________________________ "
-      puts"|                                                                  |"
-      puts"|    Awesome,We Have Just Updated Your Informaton And Your         |"
-      puts"|                #{attr} Is Now #{value}                                                                 "
-      puts"|__________________________________________________________________|"
-      puts" __________________________________________________________________ "
-      puts"                                                                  "
-      puts"                            #{self.name}                            "
-      puts"                                                                  "
-      puts"                        State: #{self.state}                        "
-      puts"                        Party: #{self.party}                        "
-      puts"                          Age: #{self.age}                        "
-      puts"                         Race: #{self.race}                        "
-      puts"                                                                  "
-      puts"__________________________________________________________________"
+    value = gets.chomp
+    @voter1.update_value(attr,value)
+    puts" __________________________________________________________________ "
+    puts"|                                                                  |"
+    puts"|     Awesome,We Have Just Updated Your Informaton And Your        |"
+    puts"|                     #{attr} Is Now #{value}                      |"
+    puts"|__________________________________________________________________|"
+    puts" __________________________________________________________________ "
+    puts"                                                                  "
+    puts"                            #{@voter1.name}                            "
+    puts"                                                                  "
+    puts"                        State: #{@voter1.state}                        "
+    puts"                        Party: #{@voter1.party}                        "
+    puts"                          Age: #{@voter1.age}                        "
+    puts"                         Race: #{@voter1.race}                        "
+    puts"                                                                  "
+    puts"__________________________________________________________________"
     ################################################################################
     ###############################     Update     #################################
     ###############################     (END)      #################################
     ################################################################################
 
-  end
-  def update_value(attr,value)
-    self.update(attr: value)
   end
 
 

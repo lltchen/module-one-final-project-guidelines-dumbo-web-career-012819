@@ -24,6 +24,9 @@ class Voter < ActiveRecord::Base
       end
     end
   end
+  def update_value(aim,value)
+    self.update("#{aim}": value)
+  end
 
 
 end
