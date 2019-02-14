@@ -58,20 +58,21 @@ class UserStories
          if regist.start_with?("y","Y")
            Screen.clear
            self.find_profile
+         else
+           puts" __________________________________________________________________ "
+           puts"|                                                                  |"
+           puts"|         Great!!! Now That You Selected To Be A #{mode},          |"
+           puts"|                     Lets Get You Registered.                     |"
+           puts"|__________________________________________________________________|"
+           gets.chomp
+           Screen.clear
+           # The code below routes the user to the correct registration based on the user's responce above.
+             if mode === 'Voter'
+               self.voter_registration
+             elsif mode == 'Candidate'
+               self.candidate_registration
+             end
          end
-        puts" __________________________________________________________________ "
-        puts"|                                                                  |"
-        puts"|         Great!!! Now That You Selected To Be A #{mode},          |"
-        puts"|              Please Complete The Registration Below.             |"
-        puts"|__________________________________________________________________|"
-        gets.chomp
-        Screen.clear
-        # The code below routes the user to the correct registration based on the user's responce above.
-          if mode === 'Voter'
-            self.voter_registration
-          elsif mode == 'Candidate'
-            self.candidate_registration
-          end
     ################################################################################
     ############################ VOTER OR A CANDIDATE? #############################
     ############################         (END)         #############################
@@ -158,11 +159,18 @@ class UserStories
      if needs_update.start_with?("n","N")
        Screen.clear
        self.update_prompt
+     else
+       Screen.clear
+       self.voting_instruction
      end
     ################################################################################
     ###############################  Registration  #################################
     ###############################      (END)     #################################
     ################################################################################
+  end
+
+  def self.candidate_registration
+
   end
 
   def self.update_prompt
@@ -238,43 +246,39 @@ class UserStories
     puts"|__________________________________________________________________|"
   end
 
-
-
-
-
-
-
-
-
-
-
-  def voting_instruction
+  def self.voting_instruction
     ################################################################################
     ###############################  Instructions  #################################
     ################################################################################
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
-    puts"|                              Awesome!!!                          |"
-    puts"|          You Have Just Finished the Registration Process!        |"
-    puts"|                 Please Confirm That It Is Correct.               |"
+    puts"|                             Awesome!!!                           |"
+    puts"|      Now That Your Done With That, Lets Dive Right Into It.      |"
     puts"|__________________________________________________________________|"
     gets.chomp
     puts" __________________________________________________________________ "
     puts"                                                                  "
-    puts"                            #{my_name}                            "
+    puts"                      VOTING  INSTRUCTIONS                         "
     puts"                                                                  "
-    puts"                        State: #{my_state}                        "
-    puts"                        Party: #{my_party}                        "
-    puts"                          Age: #{my_age}                          "
-    puts"                         Race: #{my_race}                         "
-    puts"                                                                  "
+    puts"       Today you will have the chance to vote in three rounds         "
+    puts"       of elections(Local,State & Federal). During each round,   "
+    puts"       you will be able to see all of the candidate that have      "
+    puts"       registered for that perticular election along with their "
+    puts"       credentials.                                              "
+    puts''
+    puts"       Once you have finished analyzing the candidates, please"
+    puts"       enter in the name of the candidate you wish to vote"
+    puts"       for. Once you have done this for all three rounds, you "
+    puts"       be able to see the results of each election."
+    puts""
+    puts"                             NOTE:"
+    puts"       During each round you will also have the option to just     "
+    puts"       veiw candidates that are in you party.                                                                 "
     puts"__________________________________________________________________"
     ################################################################################
     ###############################  Instructions  #################################
     ###############################     (END)      #################################
     ################################################################################
   end
-  def self.candidate_registration
 
-  end
 end
