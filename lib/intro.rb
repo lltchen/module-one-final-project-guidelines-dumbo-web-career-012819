@@ -1,6 +1,7 @@
 class UserStories
 
   def self.intro
+    Screen.clear
       ################################################################################
       ################################ INTRODUCTIONS #################################
       ################################################################################
@@ -31,6 +32,7 @@ class UserStories
       ################################ INTRODUCTIONS #################################
       ################################     (END)     #################################
       ################################################################################
+      #Clears the terminal
       Screen.clear
       self.voter_or_candidate?
   end
@@ -47,14 +49,23 @@ class UserStories
         puts"|__________________________________________________________________|"
 
         mode = gets.chomp.capitalize
-
+        puts" __________________________________________________________________ "
+        puts'|                                                                  |'
+        puts"|              Have You Registered For This App Before?            |"
+        puts"|                            (Yes or No)                           |"
+        puts"|__________________________________________________________________|"
+        regist = gets.chomp
+         if regist.start_with?("y","Y")
+           Screen.clear
+           self.find_profile
+         end
         puts" __________________________________________________________________ "
         puts"|                                                                  |"
         puts"|         Great!!! Now That You Selected To Be A #{mode},          |"
         puts"|              Please Complete The Registration Below.             |"
         puts"|__________________________________________________________________|"
         gets.chomp
-
+        Screen.clear
         # The code below routes the user to the correct registration based on the user's responce above.
           if mode === 'Voter'
             self.voter_registration
@@ -67,6 +78,7 @@ class UserStories
     ################################################################################
   end
 
+
   def self.voter_registration
     ################################################################################
     ###############################  Registration  #################################
@@ -76,6 +88,7 @@ class UserStories
     puts"|                        Voter Registration                        |"
     puts"|__________________________________________________________________|"
     gets.chomp
+    Screen.clear
     puts" __________________________________________________________________"
     puts"|                                                                  |"
     puts"|                        What Is Your Name?                        |"
@@ -115,9 +128,9 @@ class UserStories
 
     #Race of User
     my_race = gets.chomp
-    #New Voter Instance is Created
+    #New Voter Instance is Created.
     @voter1 = Voter.create(name:my_name,state:my_state,party:my_party,age:my_age,race:my_race)
-
+    Screen.clear
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
     puts"|                            Great!!!                              |"
@@ -127,7 +140,9 @@ class UserStories
     gets.chomp
     puts" __________________________________________________________________ "
     puts"                                                                  "
-    puts"                            #{my_name}                            "
+    puts"                          Your Profile                         "
+    puts"                                                                  "
+    puts"                           #{my_name}                            "
     puts"                                                                  "
     puts"                        State: #{my_state}                        "
     puts"                        Party: #{my_party}                        "
@@ -138,7 +153,10 @@ class UserStories
     puts"                           (Yes or No)                               "
     puts"__________________________________________________________________"
     needs_update = gets.chomp
-     if needs_update.start_with?("Y","y")
+
+    #The code below routes user to update prompt.
+     if needs_update.start_with?("n","N")
+       Screen.clear
        self.update_prompt
      end
     ################################################################################
@@ -146,6 +164,7 @@ class UserStories
     ###############################      (END)     #################################
     ################################################################################
   end
+
   def self.update_prompt
     ################################################################################
     ###############################     Update     #################################
@@ -157,6 +176,8 @@ class UserStories
     gets.chomp
     # binding.pry
     puts" __________________________________________________________________ "
+    puts"                                                                  "
+    puts"                             Your Profile                         "
     puts"                                                                  "
     puts"                            #{@voter1.name}                            "
     puts"                                                                  "
@@ -202,7 +223,20 @@ class UserStories
 
   end
 
-
+  def self.find_profile
+    puts" __________________________________________________________________ "
+    puts'|                                                                  |'
+    puts"|              Please Enter the Name You User to Registered        |"
+    puts"|                         The First Time.                          |"
+    puts"|__________________________________________________________________|"
+    name = gets.chomp
+    @voter1 = Voter.registered_yet(name)
+    binding.pry
+    puts" __________________________________________________________________ "
+    puts'|                                                                  |'
+    puts"|                    Welcome Back #{@voter1.name}                  |"
+    puts"|__________________________________________________________________|"
+  end
 
 
 

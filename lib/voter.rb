@@ -1,6 +1,6 @@
 class Voter < ActiveRecord::Base
 
-  def registered_yet(voter_name)
+  def self.registered_yet(voter_name)
     Voter.find_by(name:voter_name)
   end
 

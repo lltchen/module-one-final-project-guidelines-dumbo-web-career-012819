@@ -6,4 +6,5 @@ module Screen
         print "\e[2J\e[f"
     end
 end
+
 UserStories.intro
