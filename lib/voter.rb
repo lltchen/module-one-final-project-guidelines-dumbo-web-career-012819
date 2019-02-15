@@ -26,7 +26,6 @@ class Voter < ActiveRecord::Base
     end
   end
 
-
   # See only Party align Candidates in Round #1
   def round1_my_party_cand
     Candidate.all.select do |can|
@@ -141,15 +140,25 @@ class Voter < ActiveRecord::Base
 
   #Finds a Voter's Ballots Instances
   def find_my_ballots
-    my_ballots = Ballot.all.select do |ballo|
-                 ballo.voter_id = self.id
-                 end
-    my_ballots.each do |ballo|
+    self.candidates.each do |cand|
+      binding.pry
       puts" __________________________________________________________________ "
       puts"|                                                                  |"
-      puts"|                           Round #1                               |"
-      puts"|    #{Candidate.find(ballo.candidate_id)}    |"
+      puts"|                          Round ##{round}                         |"
+      puts"|                  #{cand.level_of_governments}                    |"
       puts"|__________________________________________________________________|"
+      puts" __________________________________________________________________ "
+      puts"                                                                  "
+      puts"                          You Voted For:                          "
+      puts"                                                                  "
+      puts"                           #{cand.name}                           "
+      puts"                                                                  "
+      puts"                        State: #{cand.state}                      "
+      puts"                        Party: #{cand.party}                      "
+      puts"                          Age: #{cand.age}                        "
+      puts"                         Race: #{cand.race}                       "
+      puts"__________________________________________________________________"
+      round += 1
     end
   end
 

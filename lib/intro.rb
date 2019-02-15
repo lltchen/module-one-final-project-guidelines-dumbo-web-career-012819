@@ -367,6 +367,7 @@ class UserStories
           round3_vote = Candidate.find_by(name:round3_vote)
           Ballot.create(voter_id: $voter1.id,candidate_id:round3_vote)
           Screen.clear
+
           binding.pry
   end
 

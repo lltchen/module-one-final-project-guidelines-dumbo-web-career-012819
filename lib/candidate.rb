@@ -17,7 +17,14 @@ class Candidate < ActiveRecord::Base
       puts'==================================================='
     end
   end
+
+  def my_vote_count
+    self.ballots.count
+  end
   
+  def my_voter_demo
+
+  end
 
 
 end
