@@ -293,17 +293,81 @@ class UserStories
     ###############################     (END)      #################################
     ################################################################################
   end
+
   def self.round1
           puts" __________________________________________________________________ "
           puts"|                                                                  |"
-          puts"|                         Round #1                                 |"
-          puts"|                     Mayoral Elections                            |"
+          puts"|                           Round #1                               |"
+          puts"|                       Mayoral Elections                          |"
           puts"|__________________________________________________________________|"
           gets.chomp
-          Candidate.my_party_cand
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                   Would You Like To See Only The                 |"
+          puts"|                      Candidates in Your Party?                   |"
+          puts"|                           (Yes of No)                            |"
+          puts"|__________________________________________________________________|"
+          just_party = gets.chomp
+          if just_party.start_with?("y","Y")
+            $voter1.round1_my_party_cand
+          else
+             $voter1.round1_all_cand
+          end
           round1_vote = gets.chomp
-          round1_vote = Candidate.find_by(round1_vote)
+          round1_vote = Candidate.find_by(name:round1_vote)
           Ballot.create(voter_id: $voter1.id,candidate_id:round1_vote)
+          Screen.clear
+          self.round2
+  end
+  def self.round2
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                             Round #2                             |"
+          puts"|                         Mayoral Elections                        |"
+          puts"|__________________________________________________________________|"
+          gets.chomp
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                   Would You Like To See Only The                 |"
+          puts"|                     Candidates in Your Party?                    |"
+          puts"|                           (Yes of No)                            |"
+          puts"|__________________________________________________________________|"
+          just_party = gets.chomp
+          if just_party.start_with?("y","Y")
+            $voter1.round2_my_party_cand
+          else
+             $voter1.round2_all_cand
+          end
+          round2_vote = gets.chomp
+          round2_vote = Candidate.find_by(name:round2_vote)
+          Ballot.create(voter_id: $voter1.id,candidate_id:round2_vote)
+          Screen.clear
+          self.round3
+  end
+  def self.round3
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                             Round #3                             |"
+          puts"|                       Presidential Elections                     |"
+          puts"|__________________________________________________________________|"
+          gets.chomp
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                   Would You Like To See Only The                 |"
+          puts"|                      Candidates in Your Party?                   |"
+          puts"|                            (Yes of No)                           |"
+          puts"|__________________________________________________________________|"
+          just_party = gets.chomp
+          if just_party.start_with?("y","Y")
+            $voter1.round3_my_party_cand
+          else
+             $voter1.round3_all_cand
+          end
+          round3_vote = gets.chomp
+          round3_vote = Candidate.find_by(name:round3_vote)
+          Ballot.create(voter_id: $voter1.id,candidate_id:round3_vote)
+          Screen.clear
+          binding.pry
   end
 
 end
