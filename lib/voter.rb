@@ -140,6 +140,7 @@ class Voter < ActiveRecord::Base
 
   #Finds a Voter's Ballots Instances
   def find_my_ballots
+    round = 1
     self.candidates.each do |cand|
       binding.pry
       puts" __________________________________________________________________ "
@@ -156,10 +157,16 @@ class Voter < ActiveRecord::Base
       puts"                        State: #{cand.state}                      "
       puts"                        Party: #{cand.party}                      "
       puts"                          Age: #{cand.age}                        "
-      puts"                         Race: #{cand.race}                       "
+      puts"          Level of Government: #{cand.level_of_governments}  "
       puts"__________________________________________________________________"
       round += 1
     end
+  end
+
+
+  #Deletes all Ballots Instances for a Voter
+  def delete_ballots
+    self.ballots.destroy_all
   end
 
   # Updates the value in db

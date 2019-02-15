@@ -17,11 +17,21 @@ class Candidate < ActiveRecord::Base
       puts'==================================================='
     end
   end
+  def self.total_vote_count
+    Candidate.all.each do |can|
+      puts'==================================================='
+      puts"                                                   "
+      puts"                  #{can.name}                      "
+      puts"                                                   "
+      puts"    Total # of Votes: #{can.my_vote_count}                 "
+      puts'==================================================='
+    end
+  end
 
   def my_vote_count
     self.ballots.count
   end
-  
+
   def my_voter_demo
 
   end

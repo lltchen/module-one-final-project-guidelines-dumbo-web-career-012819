@@ -212,7 +212,7 @@ class UserStories
     puts" __________________________________________________________________ "
     puts"|                                                                  |"
     puts"|     Awesome,We Have Just Updated Your Informaton And Your        |"
-    puts"|                     #{attr} Is Now #{value}                      |"
+    puts"|                     #{attr.capitalize} Is Now #{value}                      |"
     puts"|__________________________________________________________________|"
     puts" __________________________________________________________________ "
     puts"                                                                  "
@@ -224,6 +224,9 @@ class UserStories
     puts"                         Race: #{$voter1.race}                        "
     puts"                                                                  "
     puts"__________________________________________________________________"
+    gets.chomp
+    Screen.clear
+    self.voting_instruction
     ################################################################################
     ###############################     Update     #################################
     ###############################     (END)      #################################
@@ -262,7 +265,7 @@ class UserStories
     Screen.clear
     puts" __________________________________________________________________ "
     puts"                                                                  "
-    puts"                      VOTING  INSTRUCTIONS                         "
+    puts"                       VOTING  INSTRUCTIONS                         "
     puts"                                                                  "
     puts"       Today you will have the chance to vote in three rounds         "
     puts"       of elections(Local,State & Federal). During each round,   "
@@ -283,7 +286,12 @@ class UserStories
     Screen.clear
     puts"`__________________________________________________________________"
     puts"|                                                                  |"
-    puts"|                    (Let The Games Begin)                         |"
+    puts"|            (Are You Ready To Make America Great Again?)          |"
+    puts"|__________________________________________________________________|"
+    gets.chomp
+    puts"`__________________________________________________________________"
+    puts"|                                                                  |"
+    puts"|                       (Let The Games Begin)                      |"
     puts"|__________________________________________________________________|"
     gets.chomp
     Screen.clear
@@ -315,7 +323,7 @@ class UserStories
           end
           round1_vote = gets.chomp
           round1_vote = Candidate.find_by(name:round1_vote)
-          Ballot.create(voter_id: $voter1.id,candidate_id:round1_vote)
+          Ballot.create(voter_id: $voter1.id,candidate_id:round1_vote.id)
           Screen.clear
           self.round2
   end
@@ -340,7 +348,7 @@ class UserStories
           end
           round2_vote = gets.chomp
           round2_vote = Candidate.find_by(name:round2_vote)
-          Ballot.create(voter_id: $voter1.id,candidate_id:round2_vote)
+          Ballot.create(voter_id: $voter1.id,candidate_id:round2_vote.id)
           Screen.clear
           self.round3
   end
@@ -365,10 +373,59 @@ class UserStories
           end
           round3_vote = gets.chomp
           round3_vote = Candidate.find_by(name:round3_vote)
-          Ballot.create(voter_id: $voter1.id,candidate_id:round3_vote)
+          Ballot.create(voter_id: $voter1.id, candidate_id:round3_vote.id)
           Screen.clear
-
-          binding.pry
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                             Congrates!!!                         |"
+          puts"|   You Have Just Completed The Last Round Of The 2018 Elections.  |"
+          puts"|__________________________________________________________________|"
+          gets.chomp
+          puts" __________________________________________________________________ "
+          puts"|                                                                  |"
+          puts"|                   Gets What? The Results Are In!!!               |"
+          puts"|__________________________________________________________________|"
+          Screen.clear
+          self.election_results
   end
-
+  def self.election_results
+    puts" __________________________________________________________________ "
+    puts"|                                                                  |"
+    puts"|                           Elections Results                      |"
+    puts"|__________________________________________________________________|"
+    gets.chomp
+    Candidate.total_vote_count
+    gets.chomp
+    Screen.clear
+    puts" __________________________________________________________________ "
+    puts"|                                                                  |"
+    puts"|          Below are the Candidates You Voted In Each Round.       |"
+    puts"|__________________________________________________________________|"
+    gets.chomp
+    $voter1.find_my_ballots
+    gets.chomp
+    puts" __________________________________________________________________ "
+    puts"|                                                                  |"
+    puts"|    After Seeing The Results Of Election, Would Like A Do Over?   |"
+    puts"|__________________________________________________________________|"
+    do_over = gets.chomp
+    if do_over.start_with?("Y","y")
+      $voter.delete_ballots
+      puts" __________________________________________________________________ "
+      puts"|                                                                  |"
+      puts"|                Your Right, Second Time's The Charm               |"
+      puts"|__________________________________________________________________|"
+      gets.chomp
+      Screen.clear
+      self.round1
+    else
+      puts" __________________________________________________________________ "
+      puts"|                                                                  |"
+      puts"|                             Congrates!!!                         |"
+      puts"|   You Have Just Completed The Last Round Of The 2018 Elections.  |"
+      puts"|__________________________________________________________________|"
+      gets.chomp
+      Screen.clear
+    end
+  end
 end
